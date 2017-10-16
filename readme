@@ -1,0 +1,35 @@
+这一节，对于我们要实行spring的ioc(inverse of controller)
+我们需要基本包:
+    spring-beans
+    spring-context
+    spring-core
+    spring-experssion
+我们需要打日志
+    commons-logging：这个是打log日志的规范
+    log4j:这个是打日志的实现
+
+applicationContext.xml
+    这个是为了实现spring的ioc的配置文件
+    对于idea来讲，这个文件一般是放置在resources中，不过这个里面和在eclipse的src中没有什么
+    区别，都是根目录
+
+单例与多例：
+    这个里面是单例与多例的问题，这个项目中UserServiceImpl是单例的，不过对于请求来说，我们的
+    每一个请求过来的时候，都是多例的，每一个请求都是一个Controller对象，这样当多个请求来的时
+    候，我们会创建多个对象，你可能也许会说，我们创建这么多的对象，会不会影响性能，不会的，而且
+    这个时候Controller是多例的，单例指的是在整个运行环境中只有那么一个对象，而对于多例来说，
+    没来一个请求，都会创建一个对象，这个每一个请求都不会糅杂在一起，也更加的安全，而对于Service,
+    Dao这些值是多例的就OK了。
+
+依赖注入:
+    对于service来说，由于service要实现其中的一些功能，其必须要依赖于dao的实现，这个时候叫做依赖，
+    对于spring容器来说，service是由spring来创建的，那么dao也是spring容器创建的，既然service依
+    赖与dao,那么spring就通过容器注入一个dao对象到service中
+
+IOC:控制反转，将对象的创建权交给了Spring
+DI:Dependency Injection 依赖注入，需要有IOC的环境，Spring创建这个类的过程中，Spring将类的依赖的属性设置进去
+
+schema约束:
+    xml中的schema的约束的作用就是说这个xml中有什么标签，例如<bean>,<id>等
+
+

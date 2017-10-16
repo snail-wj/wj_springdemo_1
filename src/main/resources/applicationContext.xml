@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--其中对于xsi:schemaLocation中，第一个url是名称，第二个url是路径(网络路径)，如果可以上网，这个就可以有代码提示-->
+
+    <!--
+        使用beans标签
+        id:Bean起个名字，在约束中采用ID的约束，唯一
+        class:Bean对象的全路径
+        了解:可写可不写(init-method,destory-method)
+        init-method:当bean被载入到容器的时候调用init-method属性指定的方法
+        destory-method:当bean从容器中删除的时候调用destory-method属性指定的方法
+     -->
+    <bean id="userService" class="cn.wj.demo.UserServiceImpl">
+        <!--
+            <property name="name" value="王京"/>
+                在创建UserServiceImpl这个对象的时候，给这个对象里面的name复制，这就是依赖注入
+                value只能注入String字符
+                ref可以注入对象
+        -->
+            <property name="name" value="王京"/>
+    </bean>
+
+    <!-- 演示的依赖注入-->
+    <bean id="customerDao" class="cn.wj.demo1.CustomerDaoImpl"></bean>
+    <bean id="customerService" class="cn.wj.demo1.CustomerServiceImpl">
+        <property name="customerDao" ref="customerDao"></property>
+    </bean>
+
+    <!-- 演示的构造方法的注入的方式-->
+    <bean id="car1" class="cn.wj.demo2.Car1">
+        <!-- 方式一:构造方法的注入
+            <constructor-arg name="cName" value="比亚迪"/>
+            <constructor-arg name="cPrice" value="25000.77"/>
+        -->
+        <constructor-arg index="0" value="奇瑞QQ"></constructor-arg>
+        <constructor-arg index="1" value="33333.33"></constructor-arg>
+    </bean>
+
+    <bean id="person" class="cn.wj.demo2.Person">
+        <constructor-arg name="name" value="王京"/>
+        <constructor-arg name="car" ref="car1"/>
+    </bean>
+
+    <!-- 注入集合-->
+        <!--
+        <bean id="user" class="cn.wj.demo3.User">
+            <property name="arras">
+                <list>
+                    <value>aaa</value>
+                    <value>bbb</value>
+                    <value>ccc</value>
+                    <value>eee</value>
+                </list>
+            </property>
+            <property name="psersions">
+                <ref bean="person"></ref>
+            </property>
+            <property name="map">
+                <map>
+                    <entry key="aaa" value="111"></entry>
+                    <entry key="bbb" value="222"></entry>
+                </map>
+            </property>
+            <property name="properties">
+                <props>
+                    <prop key="username">root</prop>
+                    <prop key="password">root</prop>
+                </props>
+            </property>
+        </bean>
+    -->
+
+    <!-- 引入其他的配置文件-->
+    <import resource="applicationContext2.xml"/>
+</beans>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--其中对于xsi:schemaLocation中，第一个url是名称，第二个url是路径(网络路径)，如果可以上网，这个就可以有代码提示-->
+
+
+    <!-- 注入集合-->
+    <bean id="user" class="cn.wj.demo3.User">
+        <property name="arras">
+            <list>
+                <value>aaa</value>
+                <value>bbb</value>
+                <value>ccc</value>
+                <value>eee</value>
+            </list>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="aaa" value="111"></entry>
+                <entry key="bbb" value="222"></entry>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="username">root</prop>
+                <prop key="password">root</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
