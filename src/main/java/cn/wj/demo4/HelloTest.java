@@ -48,4 +48,43 @@ public class HelloTest {
         HelloApi bean4 = beanFactory.getBean("bean4", HelloApi.class);
         bean4.sayHello();
     }
+
+    @Test
+    public void testConstructorDependencyInjectTest(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("helloWorld.xml");
+        //获取根据参数索引依赖注入的Bean
+        HelloApi byIndex = beanFactory.getBean("byIndex", HelloApi.class);
+        byIndex.sayHello();
+        //获取根据参数类型依赖注入的Bean
+        HelloApi byType = beanFactory.getBean("byType", HelloApi.class);
+        byType.sayHello();
+        //获取根据参数名字依赖注入的Bea
+        HelloApi byName = beanFactory.getBean("byName", HelloApi.class);
+        byName.sayHello();
+    }
+
+    @Test
+    public void testSetterDependencyInject(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("helloWorld.xml");
+        HelloApi bean5 = beanFactory.getBean("bean5", HelloApi.class);
+        bean5.sayHello();
+    }
+
+    @Test
+    public void testBooleanDependencyInject(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("helloWorld.xml");
+        BooleanTestBean bean = beanFactory.getBean("bean6-1", BooleanTestBean.class);
+        bean.saySuccess();
+        BooleanTestBean bean2 = beanFactory.getBean("bean6-2", BooleanTestBean.class);
+        bean2.saySuccess();
+    }
+
+    @Test
+    public void testIdRefTestBean(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("helloWorld.xml");
+        IdRefTestBean idrefBean1 = beanFactory.getBean("idrefBean1", IdRefTestBean.class);
+        System.out.println(idrefBean1.getId());
+        IdRefTestBean idrefBean2 = beanFactory.getBean("idrefBean2", IdRefTestBean.class);
+        System.out.println(idrefBean2.getId());
+    }
 }

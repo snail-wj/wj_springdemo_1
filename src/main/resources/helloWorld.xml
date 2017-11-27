@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context                http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- id 表示你这个组件的名字，class表示组件类 -->
+    <bean id="hello" class="cn.wj.demo4.HelloImp"/>
+
+    <bean id="bean1" class="cn.wj.demo4.HelloImp2"/>
+
+    <bean name="bean2" class="cn.wj.demo4.HelloImp2">
+        <!-- 指定构造器参数 -->
+        <constructor-arg index="0" value="Hello Spring"/>
+    </bean>
+
+    <!-- 使用静态工厂方法 -->
+    <bean id="bean3" class="cn.wj.demo4.HelloApiStaticFactory" factory-method="newInstance">
+        <constructor-arg index="0" value="Hello Spring!"/>
+    </bean>
+
+    <!-- 1、定义实例工厂Bean -->
+    <bean id="beanInstanceFactory" class="cn.wj.demo4.HelloApiInstanceFactory"/>
+
+    <!-- 2、使用实例工厂Bean创建Bean -->
+    <bean id="bean4"
+          factory-bean="beanInstanceFactory" factory-method="newInstance">
+        <constructor-arg index="0" value="Hello Spring!"></constructor-arg>
+    </bean>
+
+    <!-- 通过构造器参数索引方式依赖注入 -->
+    <bean id = "byIndex" class="cn.wj.demo4.HelloImpl3">
+        <constructor-arg index="0" value="Hello,World!"/>
+        <constructor-arg index="1" value="1"/>
+    </bean>
+
+    <!-- 通过构造器参数类型方式依赖注入 -->
+    <bean id="byType" class="cn.wj.demo4.HelloImpl3">
+        <constructor-arg type="java.lang.String" value="Hello,World!"/>
+        <constructor-arg type="int" value="2"/>
+    </bean>
+
+    <!-- 通过构造器参数名称方式依赖注入 -->
+    <bean id="byName" class="cn.wj.demo4.HelloImpl3">
+        <constructor-arg name="message" value="Hello,World!"/>
+        <constructor-arg name="index" value="3"/>
+    </bean>
+
+    <!-- 通过setter方式进行依赖注入 -->
+    <bean id="bean5" class="cn.wj.demo4.HelloImpl4">
+        <property name="message" value="Hello World!"/>
+        <property name="index">
+            <value>1</value>
+        </property>
+    </bean>
+
+    <!-- boolean参数值可以用on/off -->
+    <bean id="bean6-1" class="cn.wj.demo4.BooleanTestBean">
+        <property name="success" value="on"/>
+    </bean>
+    <!-- boolean参数值可以用yes/no -->
+    <bean id="bean6-2" class="cn.wj.demo4.BooleanTestBean">
+        <property name="success" value="yes"/>
+    </bean>
+    <!-- boolean参数值可以用1/0 -->
+    <bean id="bean6-3" class="cn.wj.demo4.BooleanTestBean">
+        <property name="success" value="1"/>
+    </bean>
+
+
+    <bean id="bean7-1" class="java.lang.String">
+        <constructor-arg index="0" value="test"/>
+    </bean>
+    <bean id="bean7-2" class="java.lang.String">
+        <constructor-arg index="0" value="test"/>
+    </bean>
+
+    <bean id="idrefBean1" class="cn.wj.demo4.IdRefTestBean">
+        <property name="id">
+            <idref bean="bean7-2"/>
+        </property>
+    </bean>
+    <bean id="idrefBean2" class="cn.wj.demo4.IdRefTestBean">
+        <property name="id">
+            <idref local="bean7-1"/>
+        </property>
+    </bean>
+</beans>
