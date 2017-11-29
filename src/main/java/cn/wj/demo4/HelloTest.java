@@ -87,4 +87,48 @@ public class HelloTest {
         IdRefTestBean idrefBean2 = beanFactory.getBean("idrefBean2", IdRefTestBean.class);
         System.out.println(idrefBean2.getId());
     }
+
+    @Test
+    public void testListInject(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("listInject.xml");
+        ListTestBean listBean = beanFactory.getBean("listBean", ListTestBean.class);
+        System.out.println(listBean.getValues());
+    }
+
+    @Test
+    public void testSetInject(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("listInject.xml");
+        SetTestBean setBean = beanFactory.getBean("setBean", SetTestBean.class);
+        System.out.println(setBean.getValues());
+    }
+
+    @Test
+    public void testarraysInject(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("listInject.xml");
+        ArrayTestBean arrayBean = beanFactory.getBean("arrayBean", ArrayTestBean.class);
+        System.out.println(arrayBean.getArray() );
+        System.out.println(arrayBean.getArray2());
+
+    }
+
+    @Test
+    public void testmapInject(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("listInject.xml");
+        MapTestBean mapBean = beanFactory.getBean("mapBean", MapTestBean.class);
+        System.out.println(mapBean);
+    }
+
+    @Test
+    public void testPropertiesInject(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("listInject.xml");
+        PropertiesTestBean propertiesBean = beanFactory.getBean("propertiesBean", PropertiesTestBean.class);
+        System.out.println(propertiesBean.getValues().toString());
+    }
+
+    @Test
+    public void testProperties2Inject(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("listInject.xml");
+        PropertiesTestBean propertiesBean2 = beanFactory.getBean("propertiesBean2", PropertiesTestBean.class);
+        System.out.println(propertiesBean2.getValues().toString());
+    }
 }
