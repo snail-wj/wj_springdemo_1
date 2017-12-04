@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--定义依赖的bean-->
+    <bean id="helloApi" class="cn.wj.demo4.HelloImp"></bean>
+
+    <!-- 通过构造器注入-->
+    <bean id="bean1" class="cn.wj.demo4.HelloApiDecorator">
+        <constructor-arg index="0" ref="helloApi"/>
+    </bean>
+
+    <!-- 通过setter方法注入-->
+    <bean id="bean2" class="cn.wj.demo4.HelloApiDecorator">
+        <property name="helloApi"><ref bean="helloApi"></ref> </property>
+    </bean>
+</beans>

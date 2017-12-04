@@ -1,6 +1,7 @@
 package cn.wj.demo4;
 
 import org.junit.Test;
+import org.springframework.beans.factory.BeanCurrentlyInCreationException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -130,5 +131,49 @@ public class HelloTest {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext("listInject.xml");
         PropertiesTestBean propertiesBean2 = beanFactory.getBean("propertiesBean2", PropertiesTestBean.class);
         System.out.println(propertiesBean2.getValues().toString());
+    }
+
+    @Test
+    public void testBeanInject(){
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("beanInject.xml");
+        HelloApiDecorator bean1 = beanFactory.getBean("bean1", HelloApiDecorator.class);
+        bean1.sayHello();
+        HelloApiDecorator bean2 = beanFactory.getBean("bean2", HelloApiDecorator.class);
+        bean2.sayHello();
+    }
+
+    @Test
+    public void testBeanParentInject(){
+        //初始化父容器
+        ApplicationContext parentBeanContext = new ClassPathXmlApplicationContext("parentBeanInject.xml");
+        //初始化当前容器
+        ApplicationContext localBeanContext = new ClassPathXmlApplicationContext(new String[]{"localBeanInject.xml"}, parentBeanContext);
+        HelloApi helloApi = localBeanContext.getBean("bean1", HelloApi.class);
+        HelloApi bean2 = localBeanContext.getBean("bean2", HelloApi.class);
+        helloApi.sayHello();
+        bean2.sayHello();
+    }
+
+    @Test(expected = BeanCurrentlyInCreationException.class)
+    public void testCircleByConstructor() throws Throwable{
+        try {
+            new ClassPathXmlApplicationContext("circleInjectByConstructor.xml");
+        }catch (Exception e){
+            //因为要在circle3是抛出
+            Throwable e1 = e.getCause().getCause().getCause();
+            throw  e1;
+        }
+
+    }
+
+    @Test(expected = BeanCurrentlyInCreationException.class)
+    public void testCircleBySetterAndPrototype()throws Throwable{
+        try {
+            ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("circleInjectByConstructor.xml");
+            System.out.println(ctx.getBean("circleA"));
+        }catch (Exception e){
+            Throwable e1 = e.getCause().getCause().getCause();
+            throw e1;
+        }
     }
 }
